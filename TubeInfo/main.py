@@ -1,7 +1,7 @@
 # coding: utf-8
+import os
 import shelve
 from kivy.app import App
-from kivy.clock import Clock
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
@@ -20,7 +20,8 @@ CURRENT_CONFIG = {
     'current_status': 'add'
 }
 
-DB_FILE = 'tube_db'
+
+DB_FILE = os.path.join('db', 'tube_db')
 
 def make_db(path=DB_FILE):
     with shelve.open(path, flag='n') as db:
@@ -45,12 +46,12 @@ class TubeApp(App):
                 INFO[CURRENT_CONFIG['current_aircraft']].append((obj.text))
             else:
                 INFO[CURRENT_CONFIG['current_aircraft']].remove(obj.text)
+        
+        
+            for label in [child for child in self.labels if child.id == CURRENT_CONFIG['current_aircraft']]:
+                label.text = ', '.join(sorted(INFO[CURRENT_CONFIG['current_aircraft']], key=int))
+    
         except: pass
-
-        print(INFO[CURRENT_CONFIG['current_aircraft']])
-
-        for label in [child for child in self.labels if child.id == CURRENT_CONFIG['current_aircraft']]:
-            label.text = ', '.join(sorted(INFO[CURRENT_CONFIG['current_aircraft']]))
 
         make_db()
 
@@ -60,7 +61,7 @@ class TubeApp(App):
                 INFO[key] = db[key]
 
                 for label in [child for child in self.labels if child.id == key]:
-                    label.text = ', '.join(sorted(INFO[key]))
+                    label.text = ', '.join(sorted(INFO[key], key=int))
                     
 
     def build(self):
@@ -80,7 +81,7 @@ class TubeApp(App):
         self.selector.add_widget(self.fetch)
 
         # инфо панель
-        self.accordion = Accordion(orientation='horizontal')
+        self.accordion = Accordion(orientation="vertical")
         self.item1 = AccordionItem(title='737 320 SSJ 330 777 747')
         self.item2 = AccordionItem(title='757 204 76 7 9 11')
         self.accordion.add_widget(self.item2)
@@ -95,7 +96,7 @@ class TubeApp(App):
             self.tgl.group = 'type'
             self.tgl.on_press = lambda obj=self.tgl: self.set_type(obj)
 
-            self.lbl = Label(halign='left', text_size=(300, None), shorten=False, shorten_from='left')
+            self.lbl = Label(text_size=(800, None))
             self.lbl.id = aircraft
             self.labels.append(self.lbl)
 
@@ -111,7 +112,7 @@ class TubeApp(App):
             self.tgl.group = 'type'
             self.tgl.on_press = lambda obj=self.tgl: self.set_type(obj)
 
-            self.lbl = Label(halign='left', text_size=(400, None), shorten=False, shorten_from='left')
+            self.lbl = Label(text_size=(800, None), shorten=True, shorten_from='left')
             self.lbl.id = aircraft
             self.labels.append(self.lbl)
 
