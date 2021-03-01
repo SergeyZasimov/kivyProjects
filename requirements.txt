@@ -1,0 +1,5 @@
+kivy
+kivy-examples
+cython
+ipython
+kivymd
