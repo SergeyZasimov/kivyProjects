@@ -22,7 +22,7 @@ DISTRICTS = {
                # 'Запад': tuple(range(162, 221)),
                # 'C': tuple(range(132, 151)),
                 'B': tuple(range(113, 132)),
-                'Восток': tuple(range(86, 113)),
+                'Восток': ('86', '90', '93', '94', '95','96', '97', '100', '102', '107', '109', '111')
             }
 
 
@@ -44,14 +44,14 @@ class InfoBoard(Accordion):
         board = GridLayout(cols=3)
         
         for el in list_:
-            board.add_widget(ToggleButton(text=el, size_hint_x=0.2, group='type', on_press=Root.select_unit))
+            board.add_widget(ToggleButton(text=el, size_hint_x=0.2, group='type', font_size='20sp', on_press=Root.select_unit))
 
-            lbl = Label(text_size=(550, None))
+            lbl = Label(text_size=(500, None), font_size='20sp')
             lbl.id = el
             board.add_widget(lbl)
             self.labels.append(lbl)
 
-            scr = Label(text='0', color=(1, 0, 0, 1), size_hint_x=0.2)
+            scr = Label(text='0', color=(1, 0, 0, 1), size_hint_x=0.2, font_size='25sp')
             scr.id = el
             board.add_widget(scr)
             self.scores.append(scr)
@@ -72,10 +72,10 @@ class PlacesBoard(Accordion):
 
     def createParkingPlacesItem(self, name, list_):
         item = AccordionItem(title=name)
-        board = GridLayout(cols=8, rows=8)
+        board = GridLayout(cols=7, rows=8)
 
         for place in list_:
-            board.add_widget(Button(text=str(place), on_press=Root.press_place))
+            board.add_widget(Button(text=str(place), font_size='18sp',  on_press=Root.press_place))
 
         item.add_widget(board)
         return item
@@ -114,7 +114,7 @@ class Root(BoxLayout):
         self.places_board = PlacesBoard()
         self.selector = Selector()
         
-        self.lower = BoxLayout()
+        self.lower = BoxLayout(size_hint_y=0.5)
         self.lower.add_widget(self.selector)
         self.lower.add_widget(self.places_board)
 
@@ -197,7 +197,7 @@ class Root(BoxLayout):
                             score.color = (1, 0, 0, 1)
                         
 
-    def clear():
+    def clear(self):
         pass
 
 
