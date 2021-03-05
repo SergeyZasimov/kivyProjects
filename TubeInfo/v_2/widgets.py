@@ -73,7 +73,7 @@ class Selector(BoxLayout):
 
         add = Selector.add = ToggleButton(text='Добавить', group='add_del', state='down', on_press=root.Root.select_status)
         del_ = Selector.del_ = ToggleButton(text='Удалить', group='add_del', on_press=root.Root.select_status)
-        fetch = Button(text='Данные', on_press=root.Root.fetchDB)
+        fetch = Button(text='Данные', on_press=root.Root.fetch)
         clear = Button(text='Очистить', on_press=root.Root.clear)
 
         self.add_widget(add)
