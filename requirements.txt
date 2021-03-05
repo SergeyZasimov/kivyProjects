@@ -3,3 +3,5 @@ kivy-examples
 cython
 ipython
 kivymd
+pillow
+pytesseract
