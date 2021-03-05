@@ -48,6 +48,7 @@ class PlacesBoard(Accordion):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.orientation = 'vertical'
+        self.size_hint_y = 0.6
         
         for district in DISTRICTS:
             parking_places_item = self.createParkingPlacesItem(district, DISTRICTS[district])
@@ -68,8 +69,8 @@ class Selector(BoxLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.orientation = 'vertical'
-        self.size_hint_x = 0.2
+#        self.orientation = 'vertical'
+        self.size_hint_y = 0.2
 
         add = Selector.add = ToggleButton(text='Добавить', group='add_del', state='down', on_press=root.Root.select_status)
         del_ = Selector.del_ = ToggleButton(text='Удалить', group='add_del', on_press=root.Root.select_status)

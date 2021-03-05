@@ -2,6 +2,7 @@ import os
 import shelve
 from widgets import *
 from config import DB
+from kivy.uix.boxlayout import BoxLayout
 
 class Root(BoxLayout):
     
@@ -18,12 +19,14 @@ class Root(BoxLayout):
         self.places_board = PlacesBoard()
         self.selector = Selector()
         
-        self.lower = BoxLayout(size_hint_y=0.5)
-        self.lower.add_widget(self.selector)
-        self.lower.add_widget(self.places_board)
+#       self.lower = BoxLayout(size_hint_y = 0.8)
+#       self.lower.add_widget(self.selector)
+#       self.lower.add_widget(self.places_board)
 
         self.add_widget(self.info_board)
-        self.add_widget(self.lower)
+        self.add_widget(self.places_board)
+        self.add_widget(self.selector)
+#        self.add_widget(self.lower)
 
     #методы класса Root
 
