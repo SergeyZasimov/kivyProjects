@@ -104,6 +104,8 @@ class Root(BoxLayout):
                 Root.showInfo(key)
 
     def clear(self):
-        Root.info[Root.current_unit] = []
-        Root.updateDB(Root.current_unit)
-        Root.showInfo(Root.current_unit)
+        if Root.current_unit:
+            Root.info[Root.current_unit] = []
+            Root.updateDB(Root.current_unit)
+            Root.showInfo(Root.current_unit)
+        else: pass
