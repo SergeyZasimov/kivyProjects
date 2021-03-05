@@ -10,7 +10,7 @@ class Root(BoxLayout):
         self.orientation = 'vertical'
 
         Root.status = 'Добавить'
-        Root.current_unit = None
+        self.status = Root.current_unit = None
         Root.info = self.createInfoDict()
         self.createDB()
 
@@ -42,6 +42,18 @@ class Root(BoxLayout):
         else:
             Root.status = ''
 
+    def showInfo(key):
+        for label in InfoBoard.labels:
+            if label.id == key:
+                label.text = ', '.join(sorted(Root.info[key], key=int))
+
+        for score in InfoBoard.scores:
+            if score.id == key:
+                score.text = str(len(Root.info[key]))
+                score.color = (1, 1, 1, 1)
+                if score.text == '0':
+                    score.color = (1, 0, 0, 1)
+
     def press_place(self):
         try:
             if Root.status == 'Добавить':
@@ -52,19 +64,11 @@ class Root(BoxLayout):
                 Selector.add.state = 'down'
                 Root.status = 'Добавить'
 
-            for label in InfoBoard.labels:
-                if label.id == Root.current_unit:
-                    label.text = ', '.join(sorted(Root.info[Root.current_unit], key=int))
-
-            for score in InfoBoard.scores:
-                if score.id == Root.current_unit:
-                    score.text = str(len(Root.info[Root.current_unit]))
-                    score.color = (1, 1, 1, 1)
-                    if score.text == '0':
-                        score.color = (1, 0, 0, 1)
-
+            Root.showInfo(Root.current_unit)
             Root.updateDB(Root.current_unit)
-        except Exception as ex: print(ex)
+        except Exception as ex:
+            # print(ex)
+            pass
 
     def select_unit(self):
         if self.state == 'down':
@@ -102,4 +106,6 @@ class Root(BoxLayout):
                         
 
     def clear(self):
-        pass
+        Root.info[Root.current_unit] = []
+        Root.updateDB(Root.current_unit)
+        Root.showInfo(Root.current_unit)
